@@ -1,8 +1,4 @@
-
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   MapPin,
@@ -22,47 +18,87 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
+// Данные о бонусных картах магазинов
+const storeCards = [
+  {
+    name: "Магнит",
+    points: 1250,
+    cardNumber: "1234567890",
+    color: "from-[#e63e62] to-[#c01d42]",
+  },
+  {
+    name: "Табрис",
+    points: 980,
+    cardNumber: "2345678901",
+    color: "from-[#37b24d] to-[#2b8a3e]",
+  },
+  {
+    name: "Лента",
+    points: 1580,
+    cardNumber: "3456789012",
+    color: "from-[#4263eb] to-[#3b5bdb]",
+  },
+  {
+    name: "Пятерочка",
+    points: 760,
+    cardNumber: "4567890123",
+    color: "from-[#f59f00] to-[#e67700]",
+  },
+  {
+    name: "Метро",
+    points: 2100,
+    cardNumber: "5678901234",
+    color: "from-[#7950f2] to-[#6741d9]",
+  },
+];
+
 const Index = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Header с адресом */}
-      <header className="sticky top-0 z-10 bg-white p-4 shadow-sm">
+      <header className="sticky top-0 z-10 bg-white p-4 shadow-md">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-[#9b87f5]" />
-            <span className="text-sm font-medium">ул. Ставропольская, 149</span>
+          <div className="flex items-center gap-3">
+            <MapPin className="h-6 w-6 text-[#9b87f5]" />
+            <span className="text-base font-medium">
+              ул. Ставропольская, 149
+            </span>
           </div>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <ChevronRight className="h-5 w-5" />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full h-10 w-10"
+          >
+            <ChevronRight className="h-6 w-6" />
           </Button>
         </div>
       </header>
 
       {/* Основной контент */}
-      <main className="flex-1 px-4 pt-4 pb-20">
+      <main className="flex-1 px-5 pt-6 pb-24">
         {/* Дополнительные услуги */}
-        <section className="mb-6">
-          <div className="grid grid-cols-2 gap-4">
+        <section className="mb-8">
+          <div className="grid grid-cols-2 gap-5">
             <Button
               variant="outline"
-              className="h-20 flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-100 bg-white"
+              className="h-24 flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-gray-100 bg-white shadow-sm hover:bg-[#f8f5ff] hover:border-[#9b87f5]/30"
             >
-              <Receipt className="h-6 w-6 text-[#9b87f5]" />
-              <span className="text-sm font-medium">Рецепты</span>
+              <Receipt className="h-8 w-8 text-[#9b87f5]" />
+              <span className="text-base font-medium">Рецепты</span>
             </Button>
             <Button
               variant="outline"
-              className="h-20 flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-gray-100 bg-white"
+              className="h-24 flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-gray-100 bg-white shadow-sm hover:bg-[#f8f5ff] hover:border-[#9b87f5]/30"
             >
-              <Ticket className="h-6 w-6 text-[#9b87f5]" />
-              <span className="text-sm font-medium">Купоны</span>
+              <Ticket className="h-8 w-8 text-[#9b87f5]" />
+              <span className="text-base font-medium">Купоны</span>
             </Button>
           </div>
         </section>
 
         {/* Бонусные карты */}
-        <section className="mb-8">
-          <h2 className="text-lg font-medium mb-4">Ваши бонусные карты</h2>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold mb-5">Ваши бонусные карты</h2>
           <Carousel
             opts={{
               align: "start",
@@ -71,69 +107,79 @@ const Index = () => {
             className="w-full"
           >
             <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
+              {storeCards.map((store, index) => (
                 <CarouselItem key={index} className="basis-4/5">
-                  <Card className="bg-gradient-to-br from-[#9b87f5] to-[#7e69ab] text-white overflow-hidden rounded-xl">
+                  <Card
+                    className={`bg-gradient-to-br ${store.color} text-white overflow-hidden rounded-xl shadow-lg`}
+                  >
                     <CardContent className="p-6 flex flex-col gap-2">
-                      <div className="flex justify-between">
-                        <span className="font-bold">Магазин {index + 1}</span>
-                        <span className="text-sm opacity-80">{1000 + index * 100} баллов</span>
+                      <div className="flex justify-between items-center">
+                        <span className="font-bold text-lg">{store.name}</span>
+                        <span className="text-base font-medium">
+                          {store.points} баллов
+                        </span>
                       </div>
-                      <div className="mt-6 text-xs opacity-80">Карта #{1234567890 + index}</div>
+                      <div className="mt-8 text-sm opacity-80">
+                        Карта #{store.cardNumber}
+                      </div>
                     </CardContent>
                   </Card>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-1" />
-            <CarouselNext className="right-1" />
+            <CarouselPrevious className="left-1 h-9 w-9" />
+            <CarouselNext className="right-1 h-9 w-9" />
           </Carousel>
         </section>
 
         {/* Варианты корзины */}
         <section>
-          <h2 className="text-lg font-medium mb-4">Выберите корзину</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <h2 className="text-xl font-semibold mb-5">Выберите корзину</h2>
+          <div className="grid grid-cols-2 gap-5">
             <Button
               variant="outline"
-              className="h-32 flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-gray-100 bg-white"
+              className="h-36 flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-gray-100 bg-white shadow-sm hover:bg-[#f8f5ff] hover:border-[#9b87f5]/30"
             >
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#9b87f5]/10">
-                <ShoppingCart className="h-6 w-6 text-[#9b87f5]" />
+              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#9b87f5]/15">
+                <ShoppingCart className="h-8 w-8 text-[#9b87f5]" />
               </div>
-              <span className="text-sm font-medium text-center">Самая быстрая доставка</span>
+              <span className="text-base font-medium text-center">
+                Самая быстрая доставка
+              </span>
             </Button>
             <Button
               variant="outline"
-              className="h-32 flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-gray-100 bg-white"
+              className="h-36 flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-gray-100 bg-white shadow-sm hover:bg-[#f8f5ff] hover:border-[#9b87f5]/30"
             >
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#9b87f5]/10">
-                <ShoppingCart className="h-6 w-6 text-[#9b87f5]" />
+              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#9b87f5]/15">
+                <ShoppingCart className="h-8 w-8 text-[#9b87f5]" />
               </div>
-              <span className="text-sm font-medium text-center">Самая бюджетная корзина</span>
+              <span className="text-base font-medium text-center">
+                Самая бюджетная корзина
+              </span>
             </Button>
           </div>
         </section>
       </main>
 
       {/* Нижняя навигация */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-sm">
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-md">
         <nav className="flex justify-around py-3">
           <Button variant="ghost" className="flex flex-col items-center gap-1">
-            <User className="h-5 w-5" />
-            <span className="text-xs">Профиль</span>
+            <User className="h-7 w-7" />
+            <span className="text-xs font-medium">Профиль</span>
           </Button>
           <Button variant="ghost" className="flex flex-col items-center gap-1">
-            <ShoppingCart className="h-5 w-5" />
-            <span className="text-xs">Корзина</span>
+            <ShoppingCart className="h-7 w-7" />
+            <span className="text-xs font-medium">Корзина</span>
           </Button>
           <Button variant="ghost" className="flex flex-col items-center gap-1">
-            <Store className="h-5 w-5" />
-            <span className="text-xs">Магазины</span>
+            <Store className="h-7 w-7" />
+            <span className="text-xs font-medium">Магазины</span>
           </Button>
           <Button variant="ghost" className="flex flex-col items-center gap-1">
-            <BarChart3 className="h-5 w-5" />
-            <span className="text-xs">Аналитика</span>
+            <BarChart3 className="h-7 w-7" />
+            <span className="text-xs font-medium">Аналитика</span>
           </Button>
         </nav>
       </footer>
